@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li {
+            width: 500px;
+            display: flex;
+            align-items: center;
+            background: #ccc;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" @keydown.13="addFn" v-model="txt">
+        <div class="listtop">
+            <h3>正在进行</h3>
+            <li v-for="(item,index) in listing">
+                <input type="checkbox" @click="clickFn(item,index)">
+                <p>{{item.title}}</p>
+            </li>
+        </div>
+        <div>
+            <h3>已完成</h3>
+            <li v-for="(item,index) in listed">
+                <input type="checkbox" @click="finish(item,index)">
+                <p>{{item.name}}</p>
+            </li>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            txt: "",
+            listing: [],
+            listed: []
+        },
+        methods: {
+            addFn() {
+                this.listing.push({
+                    title: this.txt,
+                    // flag: false
+                });
+            },
+            clickFn(item, index) {
+                // item.flag = !item.flag;
+                this.listing.splice(index, 1)
+                this.listed.push({
+                    name: item.title
+                })
+            },
+            finish(item, index) {
+                this.listed.splice(index, 1)
+                this.listing.push({
+                    title: item.name
+                })
+            }
+        },
+    })
+</script>
+
+</html>
